@@ -1,0 +1,19 @@
+{
+    "remotePath": "./",
+    "host": "45.64.187.212",
+    "username": "web@monrukresort.com",
+    "password": "@max034826156",
+    "port": 21,
+    "secure": false,
+    "protocol": "ftp",
+    "uploadOnSave": false,
+    "passive": false,
+    "debug": false,
+    "privateKeyPath": null,
+    "passphrase": null,
+    "ignore": [
+        "\\.vscode",
+        "\\.git",
+        "\\.DS_Store"
+    ]
+}

@@ -11,15 +11,16 @@
           </div>
         </div>
 
-        <div class="row" ref="pictures">
-          <div v-for="value in viewAlbum" class="col-lg-3 col-md-4 col-xs-6 thumb">
-              <a class="thumbnail" href="#">
+        <div class="row" ref="pictures" style="padding-left: 15px; padding-right: 15px;">
+          <div v-for="value in viewAlbum" class="col-lg-3 col-md-4 col-xs-6 thumb" style="padding-left: 0px; padding-right: 0px;">
+              <el-card :body-style="{ padding: '0px' }">
                   <img class="img-responsive" :src="Dri + value.name" style="width: 100%; height: 185px;">
-              </a>
+              </el-card>
           </div>
         </div>
 
       </div>
+      <div style="margin-bottom: 10px;"></div>
     </div>
   </div>
 </template>

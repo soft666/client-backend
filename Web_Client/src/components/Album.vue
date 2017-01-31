@@ -11,20 +11,20 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="padding-left: 15px; padding-right: 15px;">
 
-          <div v-for="value in viewAlbum" class="col-lg-3 col-md-4 col-xs-6">
-              <div class="card" @click="viewalbum_btn(value.id)">
-                  <div class="card-image">
-                      <img class="img-responsive" :src="Dir + value.image" style="width: 100%; height: 185px;">
-
-                  </div><!-- card image -->
-
-                  <div class="card-content text-center">
-                      <span>{{ value.name }}</span>
-                  </div><!-- card content -->
-              </div>
-            </div>
+          <div v-for="value in viewAlbum" class="col-lg-3 col-md-4 col-xs-6" style="padding-top: 5px; padding-left: 2px; padding-right: 2px;">
+              <el-card :body-style="{ padding: '0px' }">
+                <img class="featurette-image img-responsive center-block" :src="Dir + value.image" style="height: 210px; width: 100%">
+                <div style="padding: 14px;">
+                  <span>{{ value.name }}</span>
+                  <div class="bottom clearfix">
+                    <time class="time"></time>
+                    <el-button type="primary" size="small" class="pull-right" @click="viewalbum_btn(value.id)"><i class="el-icon-view"></i> ดูรูปภาพ</el-button>
+                  </div>
+                </div>
+              </el-card>
+          </div>
 
         </div>
 

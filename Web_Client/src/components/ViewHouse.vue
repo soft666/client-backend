@@ -12,10 +12,10 @@
         </div>
 
         <div class="row" ref="pictures" id="lightgallery">
-          <div v-for="value in viewAlbum" class="col-lg-3 col-md-4 col-xs-6 thumb item">
-              <a class="thumbnail" href="#">
+          <div v-for="value in viewAlbum" class="col-lg-3 col-md-4 col-xs-6 thumb item" style="padding-top: 5px;">
+              <el-card :body-style="{ padding: '0px' }">
                   <img class="img-responsive" :src="Dri + value.name" style="width: 100%; height: 185px;">
-              </a>
+              </el-card>
           </div>
         </div>
 
@@ -30,7 +30,8 @@ export default {
   data: () => ({
     viewAlbum: '',
     viewAlbumName: '',
-    Dri: apiImg
+    Dri: apiImg,
+    dialogVisible: false
   }),
   mounted () {
     this.album()

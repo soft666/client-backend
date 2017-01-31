@@ -9,6 +9,7 @@ import Album from './components/Album'
 import ViewAlbum from './components/ViewAlbum'
 import Contact from './components/Contact'
 import ViewHouse from './components/ViewHouse'
+import ViewEvent from './components/ViewEvent.vue'
 
 const router = new VueRouter({
   mode: 'history',
@@ -19,6 +20,7 @@ const router = new VueRouter({
   { path: '/viewalbum/:id', component: ViewAlbum },
   { path: '/contact', component: Contact },
   { path: '/viewhouse/:id', component: ViewHouse },
+  { path: '/viewdetailevent/:id', component: ViewEvent },
   { path: '*', redirect: '/' }
   ]
 })

@@ -4,22 +4,44 @@
 
       <div class="row" style="margin-top: 20px;">
         <div v-for="value in House" class="col-lg-4 col-md-4 col-xs-12">
-          <img :src="Dir + value.image" style="width: 100%;">
-          <h2>{{ value.name }} <a class="btn btn-info btn-sm pull-right" @click="viewalbum_btn(value.id)" role="button">ดูรูปภาพ</a></h2>
+          <el-card :body-style="{ padding: '0px' }">
+            <img :src="Dir + value.image" style="width: 100%;">
+            <h2 style="padding-left: 10px; padding-right: 10px;">{{ value.name }} 
+              <el-button type="primary" size="small" class="pull-right" @click="viewalbum_btn(value.id)"><i class="el-icon-view"></i> ดูรูปภาพ</el-button>
+            </h2>
+          </el-card>
         </div><!-- /.col-lg-4 -->
       </div><!-- /.row -->
 
       <hr class="featurette-divider">
 
-      <div class="row featurette">
+      <div class="row featurette" style="padding-left: 15px; padding-right: 15px;">
         <div class="col-xs-12">
           <h2 class="featurette-heading">กิจกรรม และ บริการต่าง ๆ </h2>
           <p class="lead">{{ EventsText }}.</p>
         </div>
-        <div class="col-lg-3 col-md-4 col-xs-6" v-for="val in Events">
-          <a class="thumbnail" href="#">
-            <img class="featurette-image img-responsive center-block" :src="Dir + val.name" style="height: 210px;">
-          </a>
+        <div class="col-lg-3 col-md-4 col-xs-6" v-for="val in Events" style="padding-top: 5px; padding-left: 4px; padding-right: 4px;">
+            <el-card :body-style="{ padding: '0px' }">
+              <img class="featurette-image img-responsive center-block" :src="Dir + val.image" style="height: 230px; width: 100%">
+              <div style="padding: 14px;">
+                <span>{{ val.name }}</span>
+                <div class="bottom clearfix">
+                  <time class="time"></time>
+                  <el-button type="primary" size="small" class="pull-right" @click="viewevent_btn(val.id)"><i class="el-icon-view"></i> ดูรูปภาพ</el-button>
+                </div>
+              </div>
+            </el-card>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+            <br>
+              <el-pagination layout="prev, pager, next" 
+                            @current-change="handleCurrentChange"
+                            :page-size ="4" 
+                            :current-page="currentpageEvent"
+                            :total="totalEvent">
+              </el-pagination>
+          </div>
         </div>
       </div>
 
@@ -33,16 +55,24 @@
         </div>
       </div>
 
+      <div class="row" style="padding-left: 15px; padding-right: 15px;">
+
+      <div class="col-lg-3 col-md-4 col-xs-6" v-for="val in Gallery" style="padding-left: 0px; padding-right: 0px;">
+          <el-card :body-style="{ padding: '0px' }">
+              <img class="img-responsive" :src="Dir + val.name" alt="" style="width:400px; height:200px;">
+          </el-card>
+      </div>
       <div class="row">
-
-    <div class="col-lg-3 col-md-4 col-xs-6" v-for="val in Gallery">
-        <a class="thumbnail" href="#">
-            <img class="img-responsive" :src="Dir + val.name" alt="" style="width:400px; height:200px;">
-        </a>
-    </div>
-</div>
-
-
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" style="padding: 5px;">
+              <el-pagination layout="prev, pager, next" 
+                            @current-change="CurrentChangeGallery"
+                            :page-size ="12" 
+                            :current-page="currentpageEvent"
+                            :total="totalGallery">
+              </el-pagination>
+          </div>
+        </div>
+      </div>
     </div>
 
 
@@ -58,7 +88,11 @@ export default {
     Gallery: [],
     Events: [],
     EventsText: '',
-    Dir: apiImg
+    Dir: apiImg,
+    totalEvent: 0,
+    currentpageEvent: 1,
+    totalGallery: 0,
+    currentpageGallery: 1
   }),
   mounted () {
     this.HouseApi()
@@ -77,16 +111,21 @@ export default {
     viewalbum_btn (id, name) {
       this.$router.push({path: 'viewhouse/' + id})
     },
-    GalleryApi () {
-      this.$http.get(apiViewGallery).then((response) => {
+    viewevent_btn (id, name) {
+      this.$router.push({path: 'viewdetailevent/' + id})
+    },
+    GalleryApi (val) {
+      this.$http.get(apiViewGallery + '?page=' + val).then((response) => {
         this.Gallery = response.data.model.data
+        this.totalGallery = response.data.model.total
       }, (response) => {
         // error callback
       })
     },
-    EventApi () {
-      this.$http.get(apiViewEvent).then((response) => {
+    EventApi (val) {
+      this.$http.get(apiViewEvent + '?page=' + val).then((response) => {
         this.Events = response.data.model.data
+        this.totalEvent = response.data.model.total
       }, (response) => {
         // error callback
       })
@@ -97,6 +136,12 @@ export default {
       }, (response) => {
         // error callback
       })
+    },
+    handleCurrentChange (val) {
+      this.EventApi(val)
+    },
+    CurrentChangeGallery (val) {
+      this.GalleryApi(val)
     }
   }
 }
